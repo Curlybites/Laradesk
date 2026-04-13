@@ -1,0 +1,61 @@
+@extends('layouts.app')
+
+@section('content')
+    <x-common.page-breadcrumb pageTitle="Create Role" />
+
+    <div class="space-y-6">
+        <div class="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+            <form action="{{ route('roles.update', $role->id) }}" method="POST" class="p-6">
+                @csrf
+                @method('PUT')
+             
+                <div class="flex justify-between gap-6">
+                    {{-- LEFT SIDE ROLES AND PERMISSIONS --}}
+                    <div class="w-2/3">
+                        <div>
+                            <x-forms.input label="Name" name="name" value="{{ $role->name }}" required />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-forms.text-area label="Description" name="description" placeholder="Enter a description..." rows="6" value="{{ $role->description }}" required />
+                        </div>
+                    </div>
+                    {{-- RIGHT SIDE ROLES AND PERMISSIONS --}}
+                    <div class="w-1/3 flex justify-end">
+                        <div class="w-full max-w-xs border rounded-lg p-4 dark:border-gray-700">
+                            <p class="mb-2 text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Assign Permissions
+                            </p>
+
+                            <div class="space-y-2">
+                                @foreach($permissions as $permission)
+                                    <x-custom.checkbox 
+                                        name="permissions[]" 
+                                        :value="$permission->name" 
+                                        :label="$permission->name" 
+                                        :checked="in_array($permission->name, $role->permissions->pluck('name')->toArray())"
+                                    />
+                                @endforeach
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 w-full px-2.5">
+                    <div class="mt-1 flex items-center gap-3">
+                        <button type="submit" class="bg-brand-500 hover:bg-brand-600 flex items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white">
+                           Update Role
+                        </button>
+    
+                        <a href="{{ route('roles.index') }}"
+                            class="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-medium text-gray-700 shadow-theme-xs transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
+

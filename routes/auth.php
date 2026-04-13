@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\VerificationController;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -42,3 +43,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
+
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'createview')->name('create');
+    Route::post('/login', 'store');
+    Route::post('/logout', 'destroy')->name('logout');
+});

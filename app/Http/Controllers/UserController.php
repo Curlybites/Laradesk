@@ -17,6 +17,14 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
+    public function create()
+    {   
+        $permissions = \Spatie\Permission\Models\Permission::all();
+        $roles = \Spatie\Permission\Models\Role::all();
+        return view('users.create', compact('permissions', 'roles'));
+      
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

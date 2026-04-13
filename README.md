@@ -1,33 +1,56 @@
-# TailAdmin Laravel Starter Kit
+# Laradesk
 
-This starter kit is based on [TailAdmin Laravel - Free Laravel Dashboard](https://github.com/TailAdmin/tailadmin-laravel).
-
-We decided to merge our [LaravelDaily/starter-kit](https://github.com/LaravelDaily/starter-kit) with TailAdmin components.
-
-As a result, you get full **simple** Laravel Auth (*login, register, forget password, profile*), styled as TailAdmin.
-
-![](https://laraveldaily.com/uploads/2025/11/tailadmin-starter-kit-profile.png)
-
-![](https://laraveldaily.com/uploads/2025/11/tailadmin-starter-kit-login.png)
-
-The main point is no React/Vue/Livewire required. Only Blade and Tailwind.
-
-Also, you're getting an example table/form with two-level menu on the sidebar to manage Users.
-
-![](https://laraveldaily.com/uploads/2025/12/tailadmin-starter-kit-users-list.png)
-
-![](https://laraveldaily.com/uploads/2025/12/tailadmin-starter-kit-user-edit.png)
+Laradesk is a **multi-tenant service desk system (SaaS)** designed for managing support tickets per city or organization. Each city or tenant can operate independently with its own users, roles, permissions, and ticketing system.
 
 ---
 
-## How to use
+## 🚀 Features
 
-To use this kit, you can install it using:
+### 🧑‍💼 Multi-Tenant System
+- Separate workspace per city / organization
+- Isolated users, roles, and tickets
+- Scalable SaaS-ready architecture
 
-```
-laravel new --using=laraveldaily/tailadmin-starter-kit
-```
+### 🎫 Ticketing System
+- Create, update, and track service requests
+- Assign tickets to agents or departments
+- Ticket status management (Open, In Progress, Resolved, Closed)
+- Priority levels (Low, Medium, High, Critical)
 
-From there, you can modify the kit to your needs and add more pages.
+### 👥 User & Role Management
+- Role-based access control (RBAC)
+- Permission system using Spatie Permission
+- Admin, Agent, and User roles
 
-For more components, TailAdmin theme also has a [Pro version](https://checkout.tailadmin.com/buy/ed68b4bb-f0c6-4d20-a241-d3a5a81b0f25?aff=EEK4LN) (*affiliate link to support my work*) with 500+ components and dashboard variants.
+### 📊 Dashboard
+- Overview of ticket statistics
+- Active vs resolved tickets
+- User activity monitoring
+
+### 🏙️ City-Based Segmentation
+- Each city acts as a separate service desk instance
+- City-specific admins and agents
+- Data isolation per city
+
+### 🔔 Notifications (Optional / Future)
+- Email notifications for ticket updates
+- Real-time updates (WebSockets / Broadcasting)
+
+---
+
+## 🏗️ Tech Stack
+
+- **Backend:** Laravel 12
+- **Frontend:** Blade / TailAdmin UI
+- **Permissions:** Spatie Laravel Permission
+- **Database:** MySQL
+- **Optional Frontend Upgrade:** Vue.js (future expansion)
+
+---
+
+## 📦 Installation
+
+### 1. Clone repository
+```bash
+git clone https://github.com/yourusername/laradesk.git
+cd laradesk

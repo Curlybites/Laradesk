@@ -44,8 +44,8 @@ Route::middleware(['auth'])->group(function () {
 Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
 
-Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'createview')->name('create');
-    Route::post('/login', 'store');
-    Route::post('/logout', 'destroy')->name('logout');
-});
+// Route::controller(LoginController::class)->group(function () {
+//     Route::get('/login', 'createview')->name('create');
+//     Route::post('/login', 'store');
+//     Route::post('/logout', 'destroy')->name('logout');
+// });

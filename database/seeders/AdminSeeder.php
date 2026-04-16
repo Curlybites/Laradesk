@@ -39,7 +39,8 @@ class AdminSeeder extends Seeder
             'name' => 'admin',
             'guard_name' => 'web',
             'description' => 'Administrator role with all permissions',
-        ]);
+        ],
+        );
 
         // Get all permissions and assign to admin role
         $allPermissions = Permission::all();
@@ -51,10 +52,39 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => bcrypt('admin'),
-            ]
+            ],
+          
+        );
+        
+
+        $adminUser->assignRole('admin');
+
+
+        // guest part 
+
+        $guestRole = Role::firstOrCreate([
+            'name' => 'guest',
+            'guard_name' => 'web',
+            'description' => 'Guest role with limited permissions',
+        ]);
+
+        $guestpermissions = [
+            'view dashboard',
+        ];
+
+        $guestRole->syncPermissions($guestpermissions);
+
+
+        $guestUser = User::firstOrCreate(
+             ['email' => 'guest@guest.com',],
+             [
+                'name' => 'Guest',
+                'password' => bcrypt('guest123'),
+             ]
         );
 
-        // Assign admin role to user
-        $adminUser->assignRole('admin');
+        $guestUser->assignRole('guest');    
+
+
     }
 }

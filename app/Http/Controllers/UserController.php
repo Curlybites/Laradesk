@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Request as FacadesRequest;
+
 
 class UserController extends Controller
 {
@@ -19,10 +22,30 @@ class UserController extends Controller
 
     public function create()
     {   
-        $permissions = \Spatie\Permission\Models\Permission::all();
+        // $permissions = \Spatie\Permission\Models\Permission::all();
         $roles = \Spatie\Permission\Models\Role::all();
-        return view('users.create', compact('permissions', 'roles'));
+        return view('users.create', compact('roles'));
       
+    }
+
+    public function store(HttpRequest $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'roles' => 'array',
+            'roles.*' => 'exists:roles,name',
+        ]);
+
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+        ]);
+
+        $user->assignRole($validatedData['roles'] ?? []);
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     /**

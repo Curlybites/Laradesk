@@ -1,37 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-    <x-common.page-breadcrumb pageTitle="Users" />
+    <x-common.page-breadcrumb pageTitle="Barangay in {{ $city->name }}" />
 
     <div class="space-y-6">
         @session('success')
             <x-ui.alert variant="success">
-                {{ $value }}
+                <p class="dark:text-white">{{ $value }}</p>
             </x-ui.alert>
         @endsession
-        @can('create user')
-        <a href="{{ route('users.create') }}" class="inline-flex items-center text-inherit no-underline">
+    
+        <a href="{{ route('cities.barangays.create', $city) }}" class="inline-flex items-center text-inherit no-underline">
             <x-ui.button size="sm" variant="primary">
-                    Create User
+                    Add Barangays
             </x-ui.button>
         </a> 
-        @endcan
-       
-        
+
+
         <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="max-w-full overflow-x-auto custom-scrollbar">
                 <table class="w-full min-w-[1102px]">
                     <thead>
                         <tr class="border-b border-gray-100 dark:border-gray-800">
+                             <th class="px-5 py-3 text-left sm:px-6">
+                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400"></p>
+                            </th>
                             <th class="px-5 py-3 text-left sm:px-6">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Name</p>
-                            </th>
-                            <th class="px-5 py-3 text-left sm:px-6">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Email</p>
-                            </th>
-
-                            <th class="px-5 py-3 text-left sm:px-6">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Roles</p>
                             </th>
                             <th class="px-5 py-3 text-left sm:px-6">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Created At</p>
@@ -42,36 +37,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($users as $user)
+                        @forelse ($barangays as $barangay)
                             <tr class="border-b border-gray-100 dark:border-gray-800">
-                                <td class="px-5 py-4 sm:px-6">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $user->name }}</p>
+                                
+                                <td class="px-5 py-3 sm:px-6">
+                                    <span class="w-3 h-3 h-3 inline-block rounded-full"
+                                        style="background-color: {{ $barangay->color }}"></span>
                                 </td>
                                 <td class="px-5 py-4 sm:px-6">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $user->email }}</p>
-                                </td>
-
-                                <td class="px-5 py-4 sm:px-6">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">
-                                        @foreach ($user->roles as $role)
-                                            <span class="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300">
-                                                {{ $role->name }}
-                                            </span>
-                                        @endforeach
-                                    </p>
-                                </td>
-
-
-
-                                <td class="px-5 py-4 sm:px-6">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $user->created_at }}</p>
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $barangay->name }}</p>
                                 </td>
                                 <td class="px-5 py-4 sm:px-6">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $user->updated_at }}</p>
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $barangay->created_at }}</p>
+                                </td>
+                                <td class="px-5 py-4 sm:px-6">
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $barangay->updated_at }}</p>
                                 </td>
                                 <td class="px-5 py-4 sm:px-6">
                                     <div class="flex items-center gap-2">
-                                        <a href="{{ route('users.edit', $user) }}"
+                                        <a href=""
                                             class="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-theme-xs transition hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -86,7 +70,7 @@
                         @empty
                             <tr>
                                 <td colspan="8" class="px-5 py-8 text-center">
-                                    <p class="text-gray-500 dark:text-gray-400">No users found.</p>
+                                    <p class="text-gray-500 dark:text-gray-400">No permissions found.</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -94,12 +78,16 @@
                 </table>
             </div>
         </div>
-
-        @if ($users->hasPages())
+        
+        @if ($barangays->hasPages())
             <div class="mt-4">
-                {{ $users->links() }}
+                {{ $barangays->links() }}
             </div>
         @endif
+
+
     </div>
+
+
 @endsection
 

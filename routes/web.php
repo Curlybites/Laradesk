@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -16,9 +17,8 @@ Route::middleware(['auth','permission:view dashboard'])->group(function () {
         return view('dashboard', ['title' => 'Dashboard']);
     })->name('dashboard');
 
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->middleware('permission:view users');;
 });
-
 
 Route::controller(RoleController::class)->middleware(['auth','permission:view roles'])->group(function () {
     Route::get('/roles', 'index')->name('roles.index');
@@ -41,6 +41,18 @@ Route::controller(PermissionController::class)->middleware(['auth','permission:v
     Route::post('/permissions', 'store')->name('permissions.store');
     Route::get('/permissions/{id}', 'edit')->name('permissions.edit');
     Route::put('/permissions/{id}', 'update')->name('permissions.update');
+});
+
+Route::controller(CityController::class)->middleware(['auth','permission:view cities'])->group(function () {
+    Route::get('/cities', 'index')->name('cities.index');
+    Route::get('/cities/create', 'create')->name('cities.create');
+    Route::post('/cities', 'store')->name('cities.store');
+
+
+    // Barangays routes
+    Route::get('/cities/{city}', 'indexBarangays')->name('cities.barangays.index');
+    Route::get('/cities/barangays/{city}', 'createBarangay')->name('cities.barangays.create');
+    Route::post('/cities/barangays/{city}', 'storeBarangay')->name('cities.barangays.store');
 });
 
 require __DIR__ . '/auth.php';

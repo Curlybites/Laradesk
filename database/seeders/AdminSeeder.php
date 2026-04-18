@@ -24,6 +24,8 @@ class AdminSeeder extends Seeder
             'create roles',
             'view user management',
             'view roles',
+            'view cities',
+            'view barangays',
         ];
 
         foreach ($permissions as $permission) {
